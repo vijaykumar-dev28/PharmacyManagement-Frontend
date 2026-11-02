@@ -21,7 +21,7 @@ const App = () => {
               <Route index element={<Navigate to="/login"/>}/>
               <Route path='/login' element={<Login/>}/>
               <Route path='/register' element={<Login/>}/>
-              <Route path='/register-admin' element={<Login/>}/>
+              <Route path='/app/register-admin' element={<Login/>}/>
             </Route>
 
             <Route path='/app' element={<ProtectedRoute><Layout/></ProtectedRoute>}>

@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { addTransaction, getMedicines, sellTransaction } from '../service/services'
 
 const AddTransaction = () => {
 
@@ -20,16 +20,10 @@ const AddTransaction = () => {
 
     let fetchMedicines=async()=>{
         try {
-            let token=localStorage.getItem("token")
-            let response=await axios.get("http://localhost:8080/medicines",{
-                headers:{
-                    Authorization:`Bearer ${token}`
-                }
-            })
+            let response=await getMedicines()
             setMedicines(response.data)
         } catch (error) {
             console.log(error);
-            
         }
     }
 
@@ -45,19 +39,10 @@ const AddTransaction = () => {
     let handleSubmit=async(e)=>{
         e.preventDefault();
         try {
-            let token=localStorage.getItem("token")
             if(isStockIn){
-                await axios.post("http://localhost:8080/stock/add",transaction,{
-                headers:{
-                    Authorization:`Bearer ${token}`
-                }
-            })
+                await addTransaction(transaction)
             }else{
-                await axios.post("http://localhost:8080/stock/sell",transaction,{
-                headers:{
-                    Authorization:`Bearer ${token}`
-                }
-            })
+                await sellTransaction(transaction)
             }
             navigate("/app/stock-transactions")
         } catch (error) {

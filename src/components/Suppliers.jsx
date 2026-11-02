@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { deleteSupplier, getSupplier } from '../service/services'
 
 const Suppliers = () => {
   let navigate = useNavigate()
@@ -12,13 +12,7 @@ const Suppliers = () => {
 
   const fetchSuppliers = async () => {
     try {
-      let token = localStorage.getItem("token")
-      console.log(token);
-      let response = await axios.get("http://localhost:8080/suppliers", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      let response = await getSupplier()
       setSuppliers(response.data)
     } catch (error) {
       console.log(error);
@@ -35,12 +29,7 @@ const Suppliers = () => {
 
   let handleDelete = async (id) => {
     try {
-      let token = localStorage.getItem("token")
-      await axios.delete(`http://localhost:8080/suppliers/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      await deleteSupplier(id)
       fetchSuppliers()
     } catch (error) {
       console.log(error);

@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { use, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
+import { login, register, registerAdmin } from '../service/services'
 
 const Login = () => {
 
@@ -26,18 +26,13 @@ const Login = () => {
         try {
 
             if (isAdmin) {
-                let token=localStorage.getItem("token")
-                await axios.post("http://localhost:8080/auth/register-admin", users,{
-                    headers:{
-                        Authorization:`Bearer ${token}`
-                    }
-                })
+                await registerAdmin(users)
                 navigate("/login")
             } else if (isRegister) {
-                await axios.post("http://localhost:8080/auth/register", users)
+                await register(users)
                 navigate("/login")
             } else {
-                let response = await axios.post("http://localhost:8080/auth/login", users)
+                let response = await login(users)
                 let data = response.data
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("role", data.role);

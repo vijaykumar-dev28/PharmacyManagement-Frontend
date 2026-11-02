@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { addSupplier, getSupplierById, updateSupplier } from '../service/services'
 
 const AddSupplier = () => {
 
@@ -17,12 +17,7 @@ const AddSupplier = () => {
     let fetchSupplier = async () => {
         if (!isEditMode) return
         try {
-            let token = localStorage.getItem("token")
-            let response = await axios.get(`http://localhost:8080/suppliers/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            let response = await getSupplierById(id)
             let data = response.data
             setSupplier({
                 name: data.name,
@@ -48,19 +43,10 @@ const AddSupplier = () => {
     let handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            let token = localStorage.getItem("token")
             if (isEditMode) {
-                await axios.put(`http://localhost:8080/suppliers/${id}`, supplier, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                await updateSupplier(id,supplier)
             } else {
-                await axios.post("http://localhost:8080/suppliers", supplier, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                await addSupplier(supplier)
             }
             navigate("/app/suppliers")
         } catch (error) {

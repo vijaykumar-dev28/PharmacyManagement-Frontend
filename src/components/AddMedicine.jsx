@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { addMedicine, getMedicineById, getSupplier, updateMedicine } from '../service/services'
 
 const AddMedicine = () => {
 
@@ -22,13 +22,7 @@ const AddMedicine = () => {
 
     let fetchMedicine = async () => {
         if (!isEditMode) return
-        let token = localStorage.getItem("token")
-
-        let response = await axios.get(`http://localhost:8080/medicines/${id}`,{
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        let response = await getMedicineById(id)
 
         let data = response.data
         setMedicine({
@@ -41,12 +35,7 @@ const AddMedicine = () => {
         })
     }
     let fetchSuppliers = async () => {
-        let token = localStorage.getItem("token")
-        let response = await axios.get("http://localhost:8080/suppliers", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        let response = await getSupplier()
         setSupplier(response.data)
     }
     useEffect(() => {
@@ -62,16 +51,10 @@ const AddMedicine = () => {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let token = localStorage.getItem("token")
-
             if (isEditMode) {
-                await axios.put(`http://localhost:8080/medicines/${id}`, medicine, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                await updateMedicine(id,medicine)
             } else {
-                await axios.post("http://localhost:8080/medicines", medicine, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                await addMedicine(medicine)
             }
             navigate("/app/medicines")
         } catch (error) {

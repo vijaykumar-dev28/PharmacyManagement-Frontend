@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getAllTransactions } from '../service/services'
 
 const StockTransaction = () => {
 
@@ -16,12 +16,7 @@ const StockTransaction = () => {
 
   let fetchTransactions = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let response = await axios.get("http://localhost:8080/stock/transactions", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      let response = await getAllTransactions()
 
       setStockTransactions((response.data).reverse())
     } catch (error) {

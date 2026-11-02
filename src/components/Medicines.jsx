@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { deleteMedicine, getMedicines } from '../service/services'
 
 const Medicines = () => {
   let navigate = useNavigate()
@@ -16,13 +16,7 @@ const Medicines = () => {
   let role = localStorage.getItem("role")
   const fetchMedicines = async () => {
     try {
-      let token = localStorage.getItem("token")
-      console.log(token);
-      let response = await axios.get("http://localhost:8080/medicines", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      let response = await getMedicines()
       setMedicines(response.data)
 
     } catch (error) {
@@ -36,12 +30,7 @@ const Medicines = () => {
 
   let handleDelete = async (id) => {
     try {
-      let token = localStorage.getItem("token")
-      await axios.delete(`http://localhost:8080/medicines/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      await deleteMedicine(id)
       fetchMedicines()
     } catch (error) {
       console.log(error);

@@ -18,7 +18,7 @@ const Sidebar = () => {
                 <NavLink to={"/app/medicines"}>Medicines</NavLink>
                 {role==="ADMIN" && <NavLink to={"/app/suppliers"}>Suppliers</NavLink>}
                 <NavLink to={"/app/stock-transactions"}>Stock Transactions</NavLink>
-                {role=="ADMIN" && <NavLink to={"/register-admin"}>Register Admin</NavLink>}
+                {role=="ADMIN" && <NavLink to={"/app/register-admin"}>Register Admin</NavLink>}
             </div>
         </div>
     )
