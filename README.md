@@ -48,6 +48,7 @@ A full-stack **Pharmacy Management System** frontend built with **React + Vite**
 | React Router DOM v6 | Client-side Routing |
 | Axios | HTTP Client |
 | CSS (Custom) | Styling |
+| React Toastify | Toast Notifications |
 
 ---
 
