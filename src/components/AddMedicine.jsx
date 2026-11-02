@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addMedicine, getMedicineById, getSupplier, updateMedicine } from '../service/services'
+import { toast } from 'react-toastify'
 
 const AddMedicine = () => {
 
@@ -53,11 +54,14 @@ const AddMedicine = () => {
         try {
             if (isEditMode) {
                 await updateMedicine(id,medicine)
+                toast.success("Medicine updated")
             } else {
                 await addMedicine(medicine)
+                toast.success("Medicine added")
             }
             navigate("/app/medicines")
         } catch (error) {
+            toast.error("Something went wrong!")
             console.log(error);
         }
 

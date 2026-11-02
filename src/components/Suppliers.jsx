@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { deleteSupplier, getSupplier } from '../service/services'
+import { toast } from 'react-toastify'
 
 const Suppliers = () => {
   let navigate = useNavigate()
@@ -31,9 +32,10 @@ const Suppliers = () => {
     try {
       await deleteSupplier(id)
       fetchSuppliers()
+      toast.success("Suppliers deleted!")
     } catch (error) {
+      toast.error("Something went wrong!")
       console.log(error);
-
     }
   }
 

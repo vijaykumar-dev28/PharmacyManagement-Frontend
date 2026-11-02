@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { addTransaction, getMedicines, sellTransaction } from '../service/services'
+import { toast } from 'react-toastify'
 
 const AddTransaction = () => {
 
@@ -41,8 +42,10 @@ const AddTransaction = () => {
         try {
             if(isStockIn){
                 await addTransaction(transaction)
+                toast.success("Stock in details added")
             }else{
                 await sellTransaction(transaction)
+                toast.success("Stock out details added")
             }
             navigate("/app/stock-transactions")
         } catch (error) {

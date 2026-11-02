@@ -10,6 +10,7 @@ import AddMedicine from './components/AddMedicine'
 import AddSupplier from './components/AddSupplier'
 import AddTransaction from './components/AddTransaction'
 import ProtectedRoute from './components/ProtectedRoute'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
             </Route>
           </Routes>
       </BrowserRouter>
+      <ToastContainer position='top-right' autoClose={800}/>
     </>
   )
 }

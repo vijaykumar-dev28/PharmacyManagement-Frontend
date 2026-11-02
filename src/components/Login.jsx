@@ -2,6 +2,7 @@ import React, { use, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { login, register, registerAdmin } from '../service/services'
+import { toast } from 'react-toastify'
 
 const Login = () => {
 
@@ -27,9 +28,11 @@ const Login = () => {
 
             if (isAdmin) {
                 await registerAdmin(users)
+                toast.success("New register as Admin")
                 navigate("/login")
             } else if (isRegister) {
                 await register(users)
+                toast.success("New register as User")
                 navigate("/login")
             } else {
                 let response = await login(users)
@@ -37,11 +40,12 @@ const Login = () => {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("role", data.role);
                 localStorage.setItem("username", data.username);
+                toast.success("Logged in successfully!")
                 navigate("/app/dashboard")
             }
         } catch (error) {
+            toast.error("Something went wrong!")
             console.log(error);
-
         }
 
     }

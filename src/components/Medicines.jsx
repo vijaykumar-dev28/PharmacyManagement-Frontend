@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { deleteMedicine, getMedicines } from '../service/services'
+import { toast } from 'react-toastify'
 
 const Medicines = () => {
   let navigate = useNavigate()
@@ -32,9 +33,10 @@ const Medicines = () => {
     try {
       await deleteMedicine(id)
       fetchMedicines()
+      toast.success("Medicine deleted")
     } catch (error) {
+      toast.error("Failed at deleting!")
       console.log(error);
-
     }
   }
 

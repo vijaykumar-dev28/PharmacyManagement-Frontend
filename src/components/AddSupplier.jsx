@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addSupplier, getSupplierById, updateSupplier } from '../service/services'
+import { toast } from 'react-toastify'
 
 const AddSupplier = () => {
 
@@ -25,7 +26,6 @@ const AddSupplier = () => {
                 email: data.email
             })
         } catch (error) {
-            console.log("Happend at Fetch Supplier in Add Supplier");
             console.log(error);
 
         }
@@ -45,13 +45,15 @@ const AddSupplier = () => {
         try {
             if (isEditMode) {
                 await updateSupplier(id,supplier)
+                toast.success("Supplier updated!")
             } else {
                 await addSupplier(supplier)
+                toast.success("Supplier added!")
             }
             navigate("/app/suppliers")
         } catch (error) {
+            toast.error("Something wrong!")
             console.log(error);
-
         }
     }
 
